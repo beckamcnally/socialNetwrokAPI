@@ -4,24 +4,32 @@ const reactionsSchema = require('./Reactions')
 const thoughtsSchema = new Schema (
   {
     thoughtText:{
-      //   * String
-      //   * Required
-      //   * Must be between 1 and 280 characters
+      type: String,
+      required: true,
+      minLength: 1,
+      maxLength: 280
     },
     createdAt:{
-      //   * Date
-      //   * Set default value to the current timestamp
-      //   * Use a getter method to format the timestamp on query
+      type: Date,
+      default: Date.now,
     },
     username: { //?(The user that created this thought)
-      //   * String
-      //   * Required
+      type: String,
+      required: true,
     },
     reactions: [reactionsSchema]
   },
   {
+    toJSON: {
+      getters: true,
+    },
+    id: false,
   }
 );
+
+reactionsSchema.virtual('formattedCreatedAt').get(function() {
+  return format(this.createdAt, 'MM/dd/yyyy HH:mm')
+});
 
 const Thoughts = model('thoughts', thoughtsSchema);
 
