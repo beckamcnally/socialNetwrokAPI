@@ -22,7 +22,8 @@
   "homepage": "https://github.com/beckamcnally/socialNetwrokAPI#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^6.0.13"
+    "mongoose": "^6.0.13",
+    "mongoose-type-email": "^1.1.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.9"

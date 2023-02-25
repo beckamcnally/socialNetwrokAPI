@@ -7,7 +7,6 @@ const {
   deleteThought,
   addReaction,
   deleteReaction,
-  allReactions4SingleThought
 } = require('../../controllers/thoughtsController');
 
 
@@ -23,9 +22,6 @@ router.route('/:id')
   .put(updateThought)
   .delete(deleteThought)
 
-// /api/thoughts/:id/reactions
-router.route('/:id/reactions')
-  .get(allReactions4SingleThought);
 
 // /api/thoughts/:id/reactions/:reactionID
 router.route('/:id/reactions/:reactionId')
