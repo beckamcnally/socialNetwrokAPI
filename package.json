@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/beckamcnally/socialNetwrokAPI#readme",
   "dependencies": {
+    "date-fns": "^2.29.3",
     "express": "^4.17.1",
     "mongoose": "^6.0.13",
     "mongoose-type-email": "^1.1.2"

@@ -1,31 +1,37 @@
 const { Schema, model } = require('mongoose');
+const { format } = require('date-fns');
 
 const reactionsSchema = new Schema (
   {
     reactionId:{
-      //   * Use Mongoose's ObjectId data type
-      //   * Default value is set to a new ObjectId
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
     },
     reactionBody:{
-    //   * String
-    //   * Required
-    //   * 280 character maximum
+      type: String,
+      required: true,
+      maxLength: 280,
     },
     username:{
-    //   * String
-    //   * Required
+      type: String,
+      required: true,
     },
     createdAt:{
-    //   * Date
-    //   * Set default value to the current timestamp
-    //   * Use a getter method to format the timestamp on query
+      type: Date,
+      default: Date.now,
   }
- },
- {
-  // This will not be a model, but rather will be used as the `reaction` field's subdocument schema in the `Thought` model.
- }
- 
+  },
+  {
+    toJSON: {
+      getters: true,
+    },
+    id: false,
+  }
 );
+
+reactionsSchema.virtual('formattedCreatedAt').get(function() {
+  return format(this.createdAt, 'MM/dd/yyyy HH:mm')
+});
 
 
 module.exports = reactionsSchema
