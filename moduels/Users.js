@@ -1,7 +1,8 @@
-const { Schema, model} = require('mongoose');
-require('mongoose-type-email');
-const thoughtsSchema = require('./Thoughts.js');
+const { Schema, model, mongoose} = require('mongoose');
+// const emailType = require('mongoose-type-email');
+const Thoughts = require('./Thoughts.js');
 
+// mongoose.plugin(emailType);
 
 const userSchema = new Schema(
   {
@@ -12,11 +13,9 @@ const userSchema = new Schema(
       trim: true
     },
     email: {
-      userEmail: {
-        type: mongoose.SchemaTypes.Email, 
+        type: String, //mongoose.SchemaTypes.Email, 
         required: true,
         unique: true
-      }
     },
     friends: [{
       type: Schema.Types.ObjectId,

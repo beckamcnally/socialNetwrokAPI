@@ -12,7 +12,6 @@ const {
 
 // /api/thoughts
 router.route('/')
-  console.log('thoughtsRoutes')
   .get(getAllThoughts)
   .post(addThought)
 
@@ -27,3 +26,5 @@ router.route('/:id')
 router.route('/:id/reactions/:reactionId')
   .post(addReaction)
   .delete(deleteReaction)
+
+  module.exports = router;
