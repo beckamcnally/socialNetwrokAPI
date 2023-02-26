@@ -21,7 +21,8 @@ router.route('/:id')
   .delete(deleteUser);
 
 // /api/user/:id/friends/:friendID
-router.route('/')
+//?but what does the body look like
+router.route('/:id/friends/:friendsId')
   .post(addFriendToUser)
   .delete(deleteFriendFromUser);
 

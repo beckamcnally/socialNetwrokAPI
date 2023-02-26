@@ -2,43 +2,41 @@ const {Users, Thoughts} = require('../moduels');
 
 module.exports = {
   addUser (req, res) {
-    console.log('hit addUser controller')
     Users.create(req.body)
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  },
+  }, //GOOD 
 
   getSingleUser (req, res) {
-    console.log('git getSingleUSer controller')
-    Users.findOne({_id:req.params.userId})
+    Users.findOne({_id:req.params.id})
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  },
+  }, //GOOD //!solve get all and will work right
 
   getUsers (req, res) {
     console.log('hit getUser controller')
     Users.find({})    
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  },
+  }, //! friends and thoughts array empty 
 
   updateUser (req, res) {
     console.log('hit updateUser controller')
-    console.log(req.body)
-    Users.findOneAndUpdate({_id: req.params.userId})
+    console.log(req.params.id)
+    Users.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  },
+  }, //GOOD
 
   deleteUser (req, res) {
-    console.log('hit deleteUser controller')
-    console.log(req.params)
-    console.log(req.body)
-    Users.findOneAndRemove({_id:req.params.userId})
+    Users.findOneAndRemove({_id:req.params.id})
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  },
-
+  }, //GOOD
 
   addFriendToUser (req, res) {
     console.log('hit addFriendsToUser controller')
@@ -48,7 +46,7 @@ module.exports = {
     ) //! this is going to be adding to an array of ids
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  },
+  }, //! not adding -- returns user wanting to be added
 
   deleteFriendFromUser (req, res) {
     console.log('hit deleteFriendFromUser controller')
@@ -59,6 +57,6 @@ module.exports = {
     )
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  }
+  } //! haven't tested due to no friends lol
 
 }

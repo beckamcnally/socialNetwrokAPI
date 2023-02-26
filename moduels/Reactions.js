@@ -6,13 +6,13 @@ const reactionsSchema = new Schema (
     reactionId:{
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
-    },
+    }, //! using to meet requirement but don't understand it
     reactionBody:{
       type: String,
       required: true,
       maxLength: 280,
     },
-    username:{
+    userName:{
       type: String,
       required: true,
     },
