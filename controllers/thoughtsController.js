@@ -65,10 +65,10 @@ module.exports = {
   }, 
 
   deleteReaction (req, res) {
-    console.log('hit deleteReaction controller')
-    Thought.findOneAndUpdate(
-      { _id: req.params.thoughtId },
-      { $pull: { reaction: { reactionId: req.params.reactionId } } },
+    console.log(req.body.reactionId)
+    Thoughts.findOneAndUpdate(
+      { _id: req.params.id },
+      { $pull: { reactions: {_id: req.body.reactionId } } },
       { runValidators: true, new: true }
     )
     .then((thoughts) => res.json(thoughts))
