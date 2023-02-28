@@ -55,14 +55,14 @@ module.exports = {
     Thoughts.findOneAndUpdate(
       { _id: req.params.id },
       { $addToSet: { reactions: req.body } },
-      { runValidators: true, new: true }
+      { new: true }
     )
     .then((thoughts) => res.json(thoughts))
     .catch((err) => {
     console.log(err)
     res.status(500).json(err)
     })
-  }, //! returns the thought  -- and doesn't show on the MongooseDB Compass
+  }, 
 
   deleteReaction (req, res) {
     console.log('hit deleteReaction controller')
