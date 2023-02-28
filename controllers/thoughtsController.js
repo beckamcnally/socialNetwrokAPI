@@ -14,9 +14,23 @@ module.exports = {
   }, //GOOD //!minus same as get all
 
   addThought (req, res) {
+    console.log(req.body.thoughtText)
+    console.log(req.body.userId )
     Thoughts.create(req.body)
+    .then((thought) => {
+        console.log(thought)
+        console.log(thought._id)
+      return Users.findOneAndUpdate(
+          {_id:req.body.userId },
+          {$push: {thoughts: thought._id}},
+          {new:true},
+        )  
+    })
     .then((thoughts) => res.json(thoughts))
-    .catch((err) => res.status(500).json(err))
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json(err)
+    })
   }, //Good
 
   updateThought (req, res) {
