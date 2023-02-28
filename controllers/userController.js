@@ -11,14 +11,14 @@ module.exports = {
     Users.findOne({_id:req.params.id})
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  }, //GOOD //!solve get all and will work right
+  }, //GOOD 
 
   getUsers (req, res) {
     console.log('hit getUser controller')
     Users.find({})    
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  }, //! friends and thoughts array empty 
+  }, //! thoughts array empty 
 
   updateUser (req, res) {
     console.log('hit updateUser controller')
@@ -34,29 +34,38 @@ module.exports = {
 
   deleteUser (req, res) {
     Users.findOneAndRemove({_id:req.params.id})
-    .then((users) => res.json(users))
+    .then((users) => {
+      !users 
+          ? res.status(404).json({ message: "No user with that ID" }) 
+          : Thoughts.deleteMany({
+              _id: { $in: users.thoughts },
+          })
+          res.status(200).json({message: "Success"});
+  })
     .catch((err) => res.status(500).json(err))
   }, //GOOD
 
   addFriendToUser (req, res) {
     console.log('hit addFriendsToUser controller')
-    console.log(req.body)
+    console.log(req.params)
     Users.findOneAndUpdate(
-      {_id: req.params.userId},
-    ) //! this is going to be adding to an array of ids
+      {_id: req.params.id},
+      { $push: { friends: req.params.friendsId } },
+      { runValidators: true, new: true }
+    )
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  }, //! not adding -- returns user wanting to be added
+  }, 
 
   deleteFriendFromUser (req, res) {
     console.log('hit deleteFriendFromUser controller')
-    Users.fidOneAndUpdate(
-    { _id: req.params.userId },
+    Users.findOneAndUpdate(
+      { _id: req.params.userId },
     { $pull: { friends: { userId: req.params.userId } } },
     { runValidators: true, new: true }
     )
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  } //! haven't tested due to no friends lol
+  } //! null
 
 }
