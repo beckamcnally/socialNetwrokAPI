@@ -5,13 +5,13 @@ module.exports = {
     Thoughts.find({})
     .then((thoughts) => res.json(thoughts))
     .catch((err) => res.status(500).json(err))
-  },  //! reaction array empty .. not understanding __v .... is this where I am supposed to add the formattedCreatedAt because it does not show up as formatted in the response on Insomnia
+  },
 
   getSingleThought (req, res) {
     Thoughts.findOne({_id: req.params.id})
     .then((thoughts) => res.json(thoughts))
     .catch((err) => res.status(500).json(err))
-  }, //GOOD //!minus same as get all
+  }, //GOOD
 
   addThought (req, res) {
     console.log(req.body.thoughtText)
@@ -65,7 +65,6 @@ module.exports = {
   }, 
 
   deleteReaction (req, res) {
-    console.log(req.body.reactionId)
     Thoughts.findOneAndUpdate(
       { _id: req.params.id },
       { $pull: { reactions: {_id: req.body.reactionId } } },
@@ -74,4 +73,4 @@ module.exports = {
     .then((thoughts) => res.json(thoughts))
     .catch((err) => res.status(500).json(err))
   },
-} //! can't test delete reaction because I don't have a id for it??
+}

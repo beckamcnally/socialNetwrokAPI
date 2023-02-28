@@ -18,7 +18,7 @@ module.exports = {
     Users.find({})    
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  }, //! thoughts array empty 
+  },
 
   updateUser (req, res) {
     console.log('hit updateUser controller')
@@ -58,14 +58,13 @@ module.exports = {
   }, 
 
   deleteFriendFromUser (req, res) {
-    console.log('hit deleteFriendFromUser controller')
     Users.findOneAndUpdate(
-      { _id: req.params.userId },
-    { $pull: { friends: { userId: req.params.userId } } },
-    { runValidators: true, new: true }
+    { _id: req.params.id },
+    { $pull: { friends: req.params.friendsId  } },
+    { new: true }
     )
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err))
-  } //! null
+  } 
 
 }
